@@ -1,0 +1,63 @@
+﻿@model Mvc.DynamicWizard.ViewModels.WizardViewModel
+@{
+    Layout = null;
+    string wizardConntent = null;
+}
+
+<link href="~/Content/SmartWizard/css/smart_wizard.min.css" rel="stylesheet" />
+<link href="~/Content/SmartWizard/css/smart_wizard_theme_arrows.min.css" rel="stylesheet" />
+
+<div id="@Model.WizardId">
+    @Html.Hidden("StepType", Model.CurrentStep.GetType())
+    <ul class="">
+        @foreach (var step in Model.GetSteps())
+        {
+            <li>
+                <a href="#@step.StepId"  data-content-url="@step.ActionUrl.ToString()">
+                    <span>@(step.Title ?? "مرحله " + step.Index)</span>
+                    <br />
+                    <i class="@step.Icon"></i>
+                    <small>@step.Descriptions</small>
+                </a>
+            </li>
+            wizardConntent += string.Format("<div id='{0}'></div>", step.StepId);
+        }
+    </ul>
+    <div>
+        @Html.Raw(wizardConntent)
+    </div>
+</div>
+
+<script src="~/Content/SmartWizard/js/jquery.smartWizard.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Toolbar extra buttons
+        var btnFinish = $('<button></button>').text('پایان')
+                                         .addClass('btn btn-info')
+                                         .on('click', function () { alert('Finish Clicked'); });
+        var btnCancel = $('<button></button>').text('انصراف')
+                                         .addClass('btn btn-danger')
+                                         .on('click', function () { $('#@Model.WizardId').smartWizard("reset"); });
+        var btnNext = $('<button></button>').text('مرحله بعد')
+                                         .addClass('btn btn-danger')
+                                         .on('click', function () { $.post('/Widgets/NextWizardStep') });
+
+        // Smart Wizard
+        $('#@Model.WizardId').smartWizard({
+            selected: 0,
+            theme: 'arrows',
+            transitionEffect: 'fade',
+            toolbarSettings: {
+                toolbarPosition: 'bottom',
+                toolbarExtraButtons: [btnFinish, btnCancel,btnNext]
+            },
+            ajaxSettings: { data: @(Html.Raw(Json.Encode(Model)))},
+            next:function(){
+                alert(1);
+            }
+
+        });
+    });
+</script>
+

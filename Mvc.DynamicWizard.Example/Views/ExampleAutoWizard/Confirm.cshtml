@@ -1,0 +1,43 @@
+﻿@using MVCWizard.Wizard.Models 
+@using MVCWizard.Wizard.Extension
+@using MVCWizard.Web.Example.Models  
+@{
+    WizardManager wm = (WizardManager)Session["myAutoWizard"];
+    Employ em = (Employ)wm.GetStep("1").StepModel;
+    Company co = (Company)wm.GetStep("2").StepModel;
+    Business bu = (Business)wm.GetStep("3").StepModel;
+}
+           
+<div id = "pagecontent" >
+
+<h2>Thank you, the employ was inserted.</h2>
+<p>
+<h4>Your's Data</h4>
+Name: @em.Name<br />
+Surname: @em.Surname<br />
+Address: @em.Address<br />
+City: @em.City<br />
+Telephone: @em.Telephone<br />
+Company: @em.Company<br />
+</p>
+
+<p>
+<h4>Company Data</h4>
+Name: @co.Name<br />
+City: @co.City<br />
+Address: @co.Address<br />
+Telephone: @co.Telephone<br />
+</p>
+
+<p>
+<h4>Business Data</h4>
+Macro Sector: @bu.MacroSector<br />
+Sector: @bu.Sector<br />
+Start Date: @bu.StartDate<br />
+</p>
+<div>
+
+</div>
+<br />
+@Html.ActionLink("Insert a new Employ","AutoStep","ExampleAutoWizard")
+</div>

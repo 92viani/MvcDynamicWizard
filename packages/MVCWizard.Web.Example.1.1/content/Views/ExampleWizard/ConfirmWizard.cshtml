@@ -1,0 +1,20 @@
+﻿@using MVCWizard.Web.Example.Models 
+@model Employ
+           
+<div id = "pagecontent" >
+
+<h2>Thank you, the employ was inserted.</h2>
+<p>
+Name: @Model.Name<br />
+Surname: @Model.Surname<br />
+Address: @Model.Address<br />
+City: @Model.City<br />
+Telephone: @Model.Telephone<br />
+Company: @Model.Company<br />
+</p>
+<div>
+
+</div>
+<br />
+@Html.ActionLink("Insert a new Employ","ActionStep","ExampleWizard")
+</div>

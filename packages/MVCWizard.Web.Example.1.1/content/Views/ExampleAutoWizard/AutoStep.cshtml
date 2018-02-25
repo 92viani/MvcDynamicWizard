@@ -1,0 +1,20 @@
+﻿@using MVCWizard.Wizard.Models 
+@using MVCWizard.Wizard.Extension 
+@{
+    WizardManager wm = (WizardManager)Session["myAutoWizard"];
+}
+
+<div id = "pagecontent" >
+@Html.ValidationSummary(false, "Error ")
+<div>
+@using (Html.BeginAutoWizardForm("ExampleAutoWizard"))
+{
+    @Html.WizardHeader(wm, true)
+        
+    @Html.WizardStepBody(wm, wm.CurrentStep.StepModel);
+        
+    @Html.WizardFooter(wm, "Go to next step " + (wm.Index + 1), "Back to step " + (wm.Index - 1), "Finish")
+}
+</div>
+
+</div>

@@ -1,0 +1,23 @@
+﻿@using MVCWizard.Web.Example.Models 
+@using MVCWizard.Wizard.Models 
+@using MVCWizard.Wizard.Extension
+@model Employ
+ 
+@{
+    WizardManager<Employ> wm = (WizardManager<Employ>)Session["myWizard"];
+}
+
+<div id = "pagecontent" >
+@Html.ValidationSummary(false, "Error ")
+<div>
+@using (Html.BeginWizardForm("ExampleWizard"))
+{
+    @Html.WizardHeader(wm, true)
+        
+    Html.RenderAction(wm.CurrentStep.StepPartialView);
+        
+    @Html.WizardFooter(wm, "Go to next step " + (wm.Index + 1), "Back to step " + (wm.Index - 1), "Finish")
+}
+</div>
+
+</div>
